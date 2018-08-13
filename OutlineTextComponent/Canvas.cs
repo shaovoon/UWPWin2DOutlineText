@@ -384,8 +384,8 @@ namespace OutlineTextComponent
             for (uint row = 0; row < canvas.SizeInPixels.Height; ++row)
             {
                 uint total_row_len = (uint)(row * stride);
-                uint total_row_mask_len = (uint)(row * (mask_stride >> 2));
-                uint total_row_image_len = (uint)(row * (image_stride >> 2));
+                uint total_row_mask_len = (uint)(row * mask_stride);
+                uint total_row_image_len = (uint)(row * image_stride);
                 for (col = 0; col < canvas.SizeInPixels.Width; ++col)
                 {
                     if (row >= image.SizeInPixels.Height || col >= image.SizeInPixels.Width)
@@ -455,7 +455,7 @@ namespace OutlineTextComponent
             for (uint row = 0; row < canvas.SizeInPixels.Height; ++row)
             {
                 uint total_row_len = row * stride;
-                uint total_row_mask_len = (uint)(row * (mask_stride >> 2));
+                uint total_row_mask_len = (uint)(row * mask_stride);
                 for (col = 0; col < canvas.SizeInPixels.Width; ++col)
                 {
                     if (row >= mask.SizeInPixels.Height || col >= mask.SizeInPixels.Width)
@@ -514,7 +514,7 @@ namespace OutlineTextComponent
             for (uint row = 0; row < canvas.SizeInPixels.Height; ++row)
             {
                 uint total_row_len = (uint)(row * stride);
-                uint total_row_mask_len = (uint)((row - offset.Y) * (mask_stride >> 2));
+                uint total_row_mask_len = (uint)((row - offset.Y) * mask_stride);
                 for (col = 0; col < canvas.SizeInPixels.Width; ++col)
                 {
                     if ((row - offset.Y) >= mask.SizeInPixels.Height || (col - offset.X) >= mask.SizeInPixels.Width ||
@@ -573,7 +573,7 @@ namespace OutlineTextComponent
             for (uint row = 0; row < canvas.SizeInPixels.Height; ++row)
             {
                 uint total_row_len = (uint)(row * stride);
-                uint total_row_mask_len = (uint)(row * (mask_stride >> 2));
+                uint total_row_mask_len = (uint)(row * mask_stride);
                 for (col = 0; col < canvas.SizeInPixels.Width; ++col)
                 {
                     if (row >= mask.SizeInPixels.Height || col >= mask.SizeInPixels.Width)
@@ -633,7 +633,7 @@ namespace OutlineTextComponent
             for (uint row = 0; row < canvas.SizeInPixels.Height; ++row)
             {
                 uint total_row_len = (uint)(row * stride);
-                uint total_row_mask_len = (uint)((row - offset.Y) * (mask_stride >> 2));
+                uint total_row_mask_len = (uint)((row - offset.Y) * mask_stride);
                 for (col = 0; col < canvas.SizeInPixels.Width; ++col)
                 {
                     if ((row - offset.Y) >= mask.SizeInPixels.Height || (col - offset.X) >= mask.SizeInPixels.Width ||

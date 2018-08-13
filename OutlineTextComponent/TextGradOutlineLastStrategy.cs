@@ -6,6 +6,7 @@ using Microsoft.Graphics.Canvas.Text;
 using Windows.UI;
 using Microsoft.Graphics.Canvas.Geometry;
 using Windows.Foundation;
+using System.Numerics;
 
 namespace OutlineTextComponent
 {
@@ -143,6 +144,8 @@ namespace OutlineTextComponent
             grad_stops[1].Position = 1.0f;
             CanvasDevice device = CanvasDevice.GetSharedDevice();
             CanvasLinearGradientBrush brush = new CanvasLinearGradientBrush(device, grad_stops);
+            brush.StartPoint = new Vector2(0, 0);
+            brush.EndPoint = new Vector2(nWidth, 0);
 
             using (CanvasRenderTarget offscreen = new CanvasRenderTarget(device, nWidth, 1, 96, Windows.Graphics.DirectX.DirectXPixelFormat.B8G8R8A8UIntNormalized,
                     CanvasAlphaMode.Premultiplied))
@@ -161,7 +164,7 @@ namespace OutlineTextComponent
                     {
                         uint index = (uint)(row * stride + col) * 4;
                         uint color = pixels[index];
-                        Color gdiColor = Color.FromArgb(pixels[index], pixels[index+1], pixels[index+2], pixels[index+3]);
+                        Color gdiColor = Color.FromArgb(pixels[index+3], pixels[index+2], pixels[index+1], pixels[index]);
                         list.Add(gdiColor);
                     }
                 }
