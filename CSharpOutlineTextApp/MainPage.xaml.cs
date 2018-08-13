@@ -28,6 +28,7 @@ using Windows.Storage.Streams;
 using Windows.Storage.Pickers;
 
 using Microsoft.Graphics.Canvas.Geometry;
+using System.Threading.Tasks;
 
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -42,12 +43,10 @@ namespace CSharpOutlineTextApp
         public MainPage()
         {
             this.InitializeComponent();
-            uint width = 0;
-            uint height = 0;
-            DrawOutlineText(1024, "Arial", "Hello Mandy2!", "text.png", false, width, height);
         }
-        public async void DrawOutlineText(int dim, string font, string text, string saved_file, bool isShadow, uint width, uint height)
+        public async Task<Size> DrawOutlineText(int dim, string font, string text, string saved_file, bool isShadow)
         {
+            Size size = new Size();
             CanvasDevice device = CanvasDevice.GetSharedDevice();
             using (CanvasRenderTarget offscreen = new CanvasRenderTarget(device, dim, dim, 96, Windows.Graphics.DirectX.DirectXPixelFormat.B8G8R8A8UIntNormalized,
                 Microsoft.Graphics.Canvas.CanvasAlphaMode.Premultiplied))
@@ -89,8 +88,8 @@ namespace CSharpOutlineTextApp
                 if (isShadow == false)
                 {
                     uint stride = (uint)dim;
-                    width = 0;
-                    height = 0;
+                    size.Width = 0;
+                    size.Height = 0;
                     byte[] pixels = offscreen.GetPixelBytes();
                     for (uint row = 0; row < dim; ++row)
                     {
@@ -101,10 +100,10 @@ namespace CSharpOutlineTextApp
                             uint index = (row_stride + col) * 4;
                             if (pixels[index + 3] > 0)
                             {
-                                if (col > width)
-                                    width = col;
-                                if (row > height)
-                                    height = row;
+                                if (col > size.Width)
+                                    size.Width = col;
+                                if (row > size.Height)
+                                    size.Height = row;
                             }
                         }
                     }
@@ -115,7 +114,15 @@ namespace CSharpOutlineTextApp
                 string saved_file2 = "\\";
                 saved_file2 += saved_file;
                 await offscreen.SaveAsync(storageFolder.Path + saved_file2);
+
+                return size;
             }
+        }
+
+        private async void btnDrawOutlineText_Click(object sender, RoutedEventArgs e)
+        {
+            Size size = await DrawOutlineText(1024, "Arial", "Hello Mandy2!", "text.png", false);
+            txtImagePath.Text = size.ToString();
         }
     }
 }
