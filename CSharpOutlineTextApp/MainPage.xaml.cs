@@ -219,8 +219,8 @@ namespace CSharpOutlineTextApp
                 CanvasTextFormat format = new CanvasTextFormat();
                 format.FontFamily = font;
                 format.FontStyle = Windows.UI.Text.FontStyle.Normal;
-                format.FontSize = 60;
-                format.FontWeight = Windows.UI.Text.FontWeights.Bold;
+                format.FontSize = 54;
+                format.FontWeight = Windows.UI.Text.FontWeights.Black;
 
                 float layoutWidth = dim;
                 float layoutHeight = dim;
@@ -295,7 +295,7 @@ namespace CSharpOutlineTextApp
 
         private async void btnDrawVacationText_Click(object sender, RoutedEventArgs e)
         {
-            Size size = await DrawVacationText(1024, "Arial Black", "VACATION", "text.png", false);
+            Size size = await DrawVacationText(1024, "Arial", "VACATION", "text.png", false);
             //txtImagePath.Text = size.ToString();
         }
     }
