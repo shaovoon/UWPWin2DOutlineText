@@ -134,6 +134,12 @@
       <Version>1.23.0</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OutlineTextComponent\OutlineTextComponent.csproj">
+      <Project>{a90f95bc-8b75-4ea8-aeda-aac75c21df7d}</Project>
+      <Name>OutlineTextComponent</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

@@ -29,7 +29,7 @@ using Windows.Storage.Pickers;
 
 using Microsoft.Graphics.Canvas.Geometry;
 using System.Threading.Tasks;
-
+using OutlineTextComponent;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -122,7 +122,86 @@ namespace CSharpOutlineTextApp
         private async void btnDrawOutlineText_Click(object sender, RoutedEventArgs e)
         {
             Size size = await DrawOutlineText(1024, "Arial", "Hello Mandy2!", "text.png", false);
-            txtImagePath.Text = size.ToString();
+            //txtImagePath.Text = size.ToString();
+        }
+
+        public async Task<Size> DrawOutlineTextWithLibrary(int dim, string font, string text, string saved_file, bool isShadow)
+        {
+            Size size = new Size();
+            CanvasDevice device = CanvasDevice.GetSharedDevice();
+            using (CanvasRenderTarget offscreen = new CanvasRenderTarget(device, dim, dim, 96, Windows.Graphics.DirectX.DirectXPixelFormat.B8G8R8A8UIntNormalized,
+                Microsoft.Graphics.Canvas.CanvasAlphaMode.Premultiplied))
+            {
+                using (CanvasDrawingSession ds = offscreen.CreateDrawingSession())
+                {
+
+                    if (isShadow)
+                        ds.Clear(Windows.UI.ColorHelper.FromArgb(0, 0, 0, 0));
+                    else
+                        ds.Clear(Windows.UI.ColorHelper.FromArgb(0, 255, 255, 255));
+                }
+                Windows.UI.Color shadow_color = Windows.UI.ColorHelper.FromArgb(100, 0, 0, 0);
+                Windows.UI.Color text_color = isShadow ? shadow_color : Colors.White;
+
+                CanvasSolidColorBrush brush = new CanvasSolidColorBrush(device, text_color);
+                CanvasTextFormat format = new CanvasTextFormat();
+                format.FontFamily = font;
+                format.FontStyle = Windows.UI.Text.FontStyle.Normal;
+                format.FontSize = 120;
+                format.FontWeight = Windows.UI.Text.FontWeights.Bold;
+
+                float layoutWidth = dim;
+                float layoutHeight = dim;
+                CanvasTextLayout textLayout = new CanvasTextLayout(device, text, format, layoutWidth, layoutHeight);
+
+                CanvasStrokeStyle stroke = new CanvasStrokeStyle();
+                stroke.DashStyle = CanvasDashStyle.Solid;
+                stroke.DashCap = CanvasCapStyle.Round;
+                stroke.StartCap = CanvasCapStyle.Round;
+                stroke.EndCap = CanvasCapStyle.Round;
+                stroke.LineJoin = CanvasLineJoin.Round;
+
+                ITextStrategy strat = OutlineTextComponent.Canvas.TextOutline(Colors.Blue, Colors.Black, 10);
+                OutlineTextComponent.Canvas.DrawTextImage(strat, offscreen, new Point(10.0, 10.0), textLayout);
+
+                if (isShadow == false)
+                {
+                    uint stride = (uint)dim;
+                    size.Width = 0;
+                    size.Height = 0;
+                    byte[] pixels = offscreen.GetPixelBytes();
+                    for (uint row = 0; row < dim; ++row)
+                    {
+                        uint row_stride = row * stride;
+
+                        for (uint col = 0; col < dim; ++col)
+                        {
+                            uint index = (row_stride + col) * 4;
+                            if (pixels[index + 3] > 0)
+                            {
+                                if (col > size.Width)
+                                    size.Width = col;
+                                if (row > size.Height)
+                                    size.Height = row;
+                            }
+                        }
+                    }
+                }
+                Windows.Storage.StorageFolder storageFolder =
+                    Windows.Storage.ApplicationData.Current.TemporaryFolder;
+                txtImagePath.Text = storageFolder.Path;
+                string saved_file2 = "\\";
+                saved_file2 += saved_file;
+                await offscreen.SaveAsync(storageFolder.Path + saved_file2);
+
+                return size;
+            }
+        }
+
+        private async void btnDrawOutlineTextWithLibrary_Click(object sender, RoutedEventArgs e)
+        {
+            Size size = await DrawOutlineTextWithLibrary(1024, "Arial", "Hello Mandy3!", "text.png", false);
+            //txtImagePath.Text = size.ToString();
         }
     }
 }
