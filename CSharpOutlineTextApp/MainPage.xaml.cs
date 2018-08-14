@@ -28,13 +28,13 @@ namespace CSharpOutlineTextApp
             Size size = new Size();
             CanvasDevice device = CanvasDevice.GetSharedDevice();
             using (CanvasRenderTarget offscreen = new CanvasRenderTarget(device, dim, dim, 96, Windows.Graphics.DirectX.DirectXPixelFormat.B8G8R8A8UIntNormalized,
-                Microsoft.Graphics.Canvas.CanvasAlphaMode.Premultiplied))
+                CanvasAlphaMode.Premultiplied))
             {
                 using (CanvasDrawingSession ds = offscreen.CreateDrawingSession())
                 {
-                    ds.Clear(Windows.UI.ColorHelper.FromArgb(255, 255, 255, 255));
+                    ds.Clear(ColorHelper.FromArgb(255, 255, 255, 255));
 
-                    Windows.UI.Color text_color = Colors.White;
+                    Color text_color = Colors.White;
 
                     CanvasSolidColorBrush brush = new CanvasSolidColorBrush(device, text_color);
                     CanvasTextFormat format = new CanvasTextFormat();
@@ -85,13 +85,13 @@ namespace CSharpOutlineTextApp
             Size size = new Size();
             CanvasDevice device = CanvasDevice.GetSharedDevice();
             using (CanvasRenderTarget offscreen = new CanvasRenderTarget(device, dim, dim, 96, Windows.Graphics.DirectX.DirectXPixelFormat.B8G8R8A8UIntNormalized,
-                Microsoft.Graphics.Canvas.CanvasAlphaMode.Premultiplied))
+                CanvasAlphaMode.Premultiplied))
             {
                 using (CanvasDrawingSession ds = offscreen.CreateDrawingSession())
                 {
                     ds.Clear(Colors.White);
                 }
-                Windows.UI.Color text_color = Colors.White;
+                Color text_color = Colors.White;
 
                 CanvasSolidColorBrush brush = new CanvasSolidColorBrush(device, text_color);
                 CanvasTextFormat format = new CanvasTextFormat();
@@ -104,8 +104,8 @@ namespace CSharpOutlineTextApp
                 float layoutHeight = dim;
                 CanvasTextLayout textLayout = new CanvasTextLayout(device, text, format, layoutWidth, layoutHeight);
 
-                ITextStrategy strat = OutlineTextComponent.Canvas.TextOutline(Colors.Blue, Colors.Black, 10);
-                OutlineTextComponent.Canvas.DrawTextImage(strat, offscreen, new Point(10.0, 10.0), textLayout);
+                ITextStrategy strat = CanvasHelper.TextOutline(Colors.Blue, Colors.Black, 10);
+                CanvasHelper.DrawTextImage(strat, offscreen, new Point(10.0, 10.0), textLayout);
 
                 Windows.Storage.StorageFolder storageFolder =
                     Windows.Storage.ApplicationData.Current.TemporaryFolder;
@@ -132,7 +132,7 @@ namespace CSharpOutlineTextApp
         {
             Size size = new Size();
             CanvasDevice device = CanvasDevice.GetSharedDevice();
-            using (CanvasRenderTarget offscreen = OutlineTextComponent.Canvas.GenImage(dim, dim, Colors.White))
+            using (CanvasRenderTarget offscreen = CanvasHelper.GenImage(dim, dim, Colors.White))
             {
                 CanvasTextFormat format = new CanvasTextFormat();
                 format.FontFamily = font;
@@ -147,24 +147,24 @@ namespace CSharpOutlineTextApp
                 Color light_purple = Color.FromArgb(255, 102, 159, 206);
                 Color dark_purple = Color.FromArgb(255, 35, 68, 95);
                 Point pt = new Point(10.0, 10.0);
-                using (var strategyOutline3 = OutlineTextComponent.Canvas.TextGradOutline(light_purple, dark_purple, light_purple, 9, GradientType.Linear))
+                using (var strategyOutline3 = CanvasHelper.TextGradOutline(light_purple, dark_purple, light_purple, 9, GradientType.Linear))
                 {
-                    OutlineTextComponent.Canvas.DrawTextImage(strategyOutline3, offscreen, pt, textLayout);
+                    CanvasHelper.DrawTextImage(strategyOutline3, offscreen, pt, textLayout);
                 }
 
                 CanvasRenderTarget maskOutline2;
-                using (var strategyOutline2 = OutlineTextComponent.Canvas.TextNoOutline(MaskColor.Blue))
+                using (var strategyOutline2 = CanvasHelper.TextNoOutline(MaskColor.Blue))
                 {
-                    maskOutline2 = OutlineTextComponent.Canvas.GenMask(strategyOutline2, dim, dim, pt, textLayout);
+                    maskOutline2 = CanvasHelper.GenMask(strategyOutline2, dim, dim, pt, textLayout);
                 }
                 Color light_yellow = Color.FromArgb(255, 255, 227, 85);
                 Color dark_yellow = Color.FromArgb(255, 243, 163, 73);
-                using (CanvasRenderTarget text_image = OutlineTextComponent.Canvas.GenImage(dim, dim, dark_yellow))
+                using (CanvasRenderTarget text_image = CanvasHelper.GenImage(dim, dim, dark_yellow))
                 {
-                    using (var strategyText2 = OutlineTextComponent.Canvas.TextGradOutlineLast(light_yellow, dark_yellow, light_yellow, 9, GradientType.Sinusoid))
+                    using (var strategyText2 = CanvasHelper.TextGradOutlineLast(light_yellow, dark_yellow, light_yellow, 9, GradientType.Sinusoid))
                     {
-                        OutlineTextComponent.Canvas.DrawTextImage(strategyText2, text_image, pt, textLayout);
-                        OutlineTextComponent.Canvas.ApplyImageToMask(text_image, maskOutline2, offscreen, MaskColor.Blue, true);
+                        CanvasHelper.DrawTextImage(strategyText2, text_image, pt, textLayout);
+                        CanvasHelper.ApplyImageToMask(text_image, maskOutline2, offscreen, MaskColor.Blue, true);
                     }
                 }
 

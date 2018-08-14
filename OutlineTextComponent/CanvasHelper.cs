@@ -11,7 +11,7 @@ using Windows.Graphics.Imaging;
 
 namespace OutlineTextComponent
 {
-    public sealed class Canvas
+    public sealed class CanvasHelper
     {
         [Windows.Foundation.Metadata.DefaultOverloadAttribute]
         public static ITextStrategy TextGlow(

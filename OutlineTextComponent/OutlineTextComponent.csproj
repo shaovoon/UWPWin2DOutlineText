@@ -107,7 +107,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Canvas.cs" />
+    <Compile Include="CanvasHelper.cs" />
     <Compile Include="ITextStrategy.cs" />
     <Compile Include="MaskColor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
