@@ -7,6 +7,7 @@ using Microsoft.Graphics.Canvas.Geometry;
 using Windows.Foundation;
 using System.Collections.Generic;
 using System.Numerics;
+using Windows.Graphics.Imaging;
 
 namespace OutlineTextComponent
 {
@@ -213,7 +214,7 @@ namespace OutlineTextComponent
                 }
             }
             offscreen.SetPixelBytes(pixels);
-
+            
             return offscreen;
         }
 
@@ -292,10 +293,7 @@ namespace OutlineTextComponent
             if (strategy == null || text_layout == null)
                 return null;
 
-            CanvasDevice device = CanvasDevice.GetSharedDevice();
-
-            CanvasRenderTarget offscreen = new CanvasRenderTarget(device, width, height, 96, Windows.Graphics.DirectX.DirectXPixelFormat.B8G8R8A8UIntNormalized,
-                CanvasAlphaMode.Premultiplied);
+            CanvasRenderTarget offscreen = GenImage(width, height, Color.FromArgb(0, 0, 0, 0));
 
             using (CanvasDrawingSession ds = offscreen.CreateDrawingSession())
             {
@@ -681,15 +679,12 @@ namespace OutlineTextComponent
             if (strategy == null || image == null || text_layout == null)
                 return false;
 
-            bool bRet = false;
-            CanvasDevice device = CanvasDevice.GetSharedDevice();
-
             using (CanvasDrawingSession ds = image.CreateDrawingSession())
             {
                 strategy.DrawString(ds, text_layout, (float)offset.X, (float)offset.Y);
             }
 
-            return bRet;
+            return true;
 
         }
 

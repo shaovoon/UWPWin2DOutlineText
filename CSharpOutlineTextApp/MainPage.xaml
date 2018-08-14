@@ -9,10 +9,10 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <TextBlock Name="txtImagePath" HorizontalAlignment="Left" Margin="158,174,0,0" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Height="205" Width="413"/>
         <Button Name="btnDrawOutlineText" Content="Draw Outline Text" HorizontalAlignment="Left" Margin="124,257,0,0" VerticalAlignment="Top" Click="btnDrawOutlineText_Click"/>
-        <Button Name="btnDrawOutlineTextWithLibrary" Content="Draw Outline Text With Library" HorizontalAlignment="Left" Margin="158,368,0,0" VerticalAlignment="Top" Click="btnDrawOutlineTextWithLibrary_Click"/>
-        <Button Name="btnDrawVacationText"  Content="Draw Vacation Text" HorizontalAlignment="Left" Margin="193,500,0,0" VerticalAlignment="Top" Click="btnDrawVacationText_Click"/>
+        <Button Name="btnDrawOutlineTextWithLibrary" Content="Draw Outline Text With Library" HorizontalAlignment="Left" Margin="124,339,0,0" VerticalAlignment="Top" Click="btnDrawOutlineTextWithLibrary_Click"/>
+        <Button Name="btnDrawVacationText"  Content="Draw Vacation Text" HorizontalAlignment="Left" Margin="124,413,0,0" VerticalAlignment="Top" Click="btnDrawVacationText_Click"/>
+        <Image Name="imgOutlineText" HorizontalAlignment="Left" Height="311" Margin="529,257,0,0" VerticalAlignment="Top" Width="657"/>
 
     </Grid>
 </Page>
