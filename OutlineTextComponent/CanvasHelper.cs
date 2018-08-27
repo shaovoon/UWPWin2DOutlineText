@@ -595,7 +595,7 @@ namespace OutlineTextComponent
                     {
                         uint pixels_canvas = (uint)((pixelsCanvas[index + 3] << 24) | (pixelsCanvas[index + 2] << 16) | (pixelsCanvas[index + 1] << 8) | pixelsCanvas[index]);
 
-                        uint result = Alphablend(pixels_canvas, color, pixelsMask[indexMask + 3], clrShadow.A);
+                        uint result = Alphablend(pixels_canvas, color, pixelsMask[indexMask + 3], (byte)(pixelsMask[indexMask + 3] * clrShadow.A / 255));
                         pixelsCanvas[index + 3] = (byte)((result & 0xff000000) >> 24);
                         pixelsCanvas[index + 2] = (byte)((result & 0xff0000) >> 16);
                         pixelsCanvas[index + 1] = (byte)((result & 0xff00) >> 8);
@@ -656,7 +656,7 @@ namespace OutlineTextComponent
                     {
                         uint pixels_canvas = (uint)((pixelsCanvas[index + 3] << 24) | (pixelsCanvas[index + 2] << 16) | (pixelsCanvas[index + 1] << 8) | pixelsCanvas[index]);
 
-                        uint result = Alphablend(pixels_canvas, color, pixelsMask[indexMask + 3], clrShadow.A);
+                        uint result = Alphablend(pixels_canvas, color, pixelsMask[indexMask + 3], (byte)(pixelsMask[indexMask + 3] * clrShadow.A / 255));
                         pixelsCanvas[index + 3] = (byte)((result & 0xff000000) >> 24);
                         pixelsCanvas[index + 2] = (byte)((result & 0xff0000) >> 16);
                         pixelsCanvas[index + 1] = (byte)((result & 0xff00) >> 8);
